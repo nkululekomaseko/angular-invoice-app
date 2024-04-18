@@ -1,0 +1,20 @@
+.chip-container {
+  border-radius: 8px;
+  text-align: center;
+  padding: 4px 16px;
+}
+
+.draft-status {
+  color: rgb(124, 93, 250);
+  background: rgba(124, 93, 250, 0.2);
+}
+
+.pending-status {
+  color: rgb(255, 143, 0);;
+  background: rgba(255, 143, 0, 0.2);
+}
+
+.paid-status {
+  color: rgb(51, 214, 159);
+  background: rgba(51, 214, 159, 0.2);
+}

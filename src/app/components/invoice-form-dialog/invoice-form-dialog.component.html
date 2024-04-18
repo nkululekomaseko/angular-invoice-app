@@ -1,0 +1,370 @@
+<div class="container">
+  <h3 mat-dialog-title>Create Invoice</h3>
+  <mat-dialog-content class="mat-typography">
+    <form
+      [formGroup]="invoiceForm"
+      (submit)="submitForm()"
+      id="invoiceFormId"
+      #form="ngForm"
+    >
+      <h4 class="heading">Bill From</h4>
+
+      <div formGroupName="addressFrom">
+        <div>
+          <mat-form-field
+            appearance="outline"
+            color="accent"
+            fxFlex="100"
+            fxFlexAlign="center"
+          >
+            <mat-label>Street Address</mat-label>
+            <input matInput formControlName="street" />
+            @if (
+              (invoiceForm.controls.addressFrom.controls.street.dirty ||
+                form.submitted) &&
+              !invoiceForm.controls.addressFrom.controls.street.valid
+            ) {
+              <mat-error>Street is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div fxLayoutGap="16">
+          <mat-form-field
+            appearance="outline"
+            fxFlex="33"
+            fxFlexAlign="center"
+            color="accent"
+          >
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" />
+            @if (
+              (invoiceForm.controls.addressFrom.controls.city.dirty ||
+                form.submitted) &&
+              !invoiceForm.controls.addressFrom.controls.city.valid
+            ) {
+              <mat-error>City is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            fxFlex="33"
+            fxFlexAlign="center"
+            color="accent"
+          >
+            <mat-label>Post Code</mat-label>
+            <input matInput formControlName="postCode" />
+            @if (
+              (invoiceForm.controls.addressFrom.controls.postCode.dirty ||
+                form.submitted) &&
+              !invoiceForm.controls.addressFrom.controls.postCode.valid
+            ) {
+              <mat-error>Post code is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            fxFlex="33"
+            fxFlexAlign="center"
+            color="accent"
+          >
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="country" />
+            @if (
+              (invoiceForm.controls.addressFrom.controls.country.dirty ||
+                form.submitted) &&
+              !invoiceForm.controls.addressFrom.controls.country.valid
+            ) {
+              <mat-error>Country is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <h4 class="heading">Bill To</h4>
+
+      <div>
+        <mat-form-field
+          appearance="outline"
+          fxFlex="100"
+          fxFlexAlign="center"
+          color="accent"
+        >
+          <mat-label>Client's Name</mat-label>
+          <input matInput formControlName="clientName" />
+          @if (
+            (invoiceForm.controls.clientName.dirty || form.submitted) &&
+            !invoiceForm.controls.clientName.valid
+          ) {
+            <mat-error>Client's name required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field
+          appearance="outline"
+          fxFlex="100"
+          fxFlexAlign="center"
+          color="accent"
+        >
+          <mat-label>Client's Email</mat-label>
+          <input matInput formControlName="clientEmail" />
+          @if (
+            (invoiceForm.controls.clientEmail.dirty || form.submitted) &&
+            !invoiceForm.controls.clientEmail.valid
+          ) {
+            <mat-error>Enter a valid email</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div formGroupName="addressTo">
+        <div>
+          <mat-form-field
+            appearance="outline"
+            fxFlex="100"
+            fxFlexAlign="center"
+            color="accent"
+          >
+            <mat-label>Street Address</mat-label>
+            <input matInput formControlName="street" />
+            @if (
+              (invoiceForm.controls.addressTo.controls.street.dirty ||
+                form.submitted) &&
+              !invoiceForm.controls.addressTo.controls.street.valid
+            ) {
+              <mat-error>Street is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+
+        <div fxLayoutGap="16">
+          <mat-form-field
+            appearance="outline"
+            fxFlex="33"
+            fxFlexAlign="center"
+            color="accent"
+          >
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city" />
+            @if (
+              (invoiceForm.controls.addressTo.controls.city.dirty ||
+                form.submitted) &&
+              !invoiceForm.controls.addressTo.controls.city.valid
+            ) {
+              <mat-error>City is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            fxFlex="33"
+            fxFlexAlign="center"
+            color="accent"
+          >
+            <mat-label>Post Code</mat-label>
+            <input matInput formControlName="postCode" />
+            @if (
+              (invoiceForm.controls.addressTo.controls.postCode.dirty ||
+                form.submitted) &&
+              !invoiceForm.controls.addressTo.controls.postCode.valid
+            ) {
+              <mat-error>Post code is required</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            fxFlex="33"
+            fxFlexAlign="center"
+            color="accent"
+          >
+            <mat-label>Country</mat-label>
+            <input matInput formControlName="country" />
+            @if (
+              (invoiceForm.controls.addressTo.controls.country.dirty ||
+                form.submitted) &&
+              !invoiceForm.controls.addressTo.controls.country.valid
+            ) {
+              <mat-error>Country is required</mat-error>
+            }
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayoutGap="16">
+        <mat-form-field appearance="outline" fxFlex="50" color="accent">
+          <mat-label>Invoice Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="invoiceDatePicker"
+            formControlName="createdDate"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="invoiceDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #invoiceDatePicker></mat-datepicker>
+          @if (
+            (invoiceForm.controls.createdDate.dirty || form.submitted) &&
+            !invoiceForm.controls.createdDate.valid
+          ) {
+            <mat-error>Valid date required</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" fxFlex="50" color="accent">
+          <mat-label>Due Date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="dueDatePicker"
+            formControlName="dueDate"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="dueDatePicker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #dueDatePicker></mat-datepicker>
+          @if (
+            (invoiceForm.controls.dueDate.dirty || form.submitted) &&
+            !invoiceForm.controls.dueDate.valid
+          ) {
+            <mat-error>Valid date required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-form-field
+          appearance="outline"
+          fxFlex="100"
+          fxFlexAlign="center"
+          color="accent"
+        >
+          <mat-label>Project Description</mat-label>
+          <input matInput formControlName="projectDescription" />
+          @if (
+            (invoiceForm.controls.projectDescription.dirty || form.submitted) &&
+            !invoiceForm.controls.projectDescription.valid
+          ) {
+            <mat-error>Project description is required</mat-error>
+          }
+        </mat-form-field>
+      </div>
+
+      <h4 class="heading">Item List</h4>
+
+      <div
+        formArrayName="itemList"
+        *ngFor="
+          let item of invoiceForm.controls.itemList.controls;
+          let i = index
+        "
+      >
+        <div
+          [formGroupName]="i"
+          fxLayout="row"
+          fxLayoutGap="8"
+          fxLayoutAlign="center center"
+        >
+          <mat-form-field
+            appearance="outline"
+            fxFlex="40"
+            fxLayoutAlign="center center"
+            color="accent"
+          >
+            <mat-label>Item Name</mat-label>
+            <input matInput formControlName="name" />
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            fxFlex="15"
+            type="number"
+            fxLayoutAlign="center center"
+            color="accent"
+          >
+            <mat-label>Qty</mat-label>
+            <input matInput formControlName="quantity" />
+          </mat-form-field>
+
+          <mat-form-field
+            appearance="outline"
+            fxFlex="25"
+            type="number"
+            fxLayoutAlign="center center"
+            color="accent"
+          >
+            <mat-label>Price</mat-label>
+            <input matInput formControlName="price" />
+            <span matTextPrefix>R&nbsp;</span>
+          </mat-form-field>
+
+          <div
+            fxFlex="15"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+            fxLayoutGap="-24"
+          >
+            <p>Total:</p>
+            <p>
+              {{
+                item.controls.quantity.value * item.controls.price.value
+                  | currency: "ZAR" : "R" : ".2"
+              }}
+            </p>
+          </div>
+
+          <button
+            mat-icon-button
+            fxFlex="5"
+            (click)="removeItem(i)"
+            type="button"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div>
+        <button
+          mat-raised-button
+          (click)="addItem()"
+          fxFlex="100"
+          color="primary"
+          type="button"
+        >
+          +Add an item
+        </button>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="column" fxLayoutGap="10px">
+    <div>
+      @if (form.submitted && !invoiceForm.controls.itemList.length) {
+        <mat-error style="font-size: 12px">Add at least one item.</mat-error>
+      }
+      @if (invoiceStatus === InvoiceStatus.ERROR) {
+        <mat-error>Could not log you in with those details.</mat-error>
+      }
+      @if (invoiceStatus === InvoiceStatus.SAVING) {
+        <mat-spinner diameter="25" color="accent"></mat-spinner>
+      }
+    </div>
+    <div>
+      <button mat-raised-button mat-dialog-close color="accent">Cancel</button>
+      <button
+        mat-raised-button
+        type="submit"
+        [disabled]="invoiceStatus === InvoiceStatus.SAVING"
+        form="invoiceFormId"
+        color="accent"
+      >
+        Save Changes
+      </button>
+    </div>
+  </mat-dialog-actions>
+</div>

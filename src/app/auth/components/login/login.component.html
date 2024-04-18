@@ -1,0 +1,79 @@
+<div class="login-container" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="mat-typography form-container">
+    <mat-card-content>
+      <div fxLayout="column" fxLayoutGap="0" fxLayoutAlign="center center">
+        <img class="logo" src="/assets/white-logo.png" alt="logo" />
+        <h2>Welcome</h2>
+        <p>Login to your account</p>
+      </div>
+      <form [formGroup]="loginForm" (submit)="authenticate()" #form="ngForm">
+        <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5">
+          <mat-form-field appearance="outline" color="accent" fxFlexFill>
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              type="email"
+              placeholder="email"
+            />
+            <mat-icon matPrefix>mail</mat-icon>
+            @if (
+              (loginForm.controls.email.dirty || form.submitted) &&
+              !loginForm.controls.email.valid
+            ) {
+              <mat-error>Please provide a valid email</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" color="accent" fxFlexFill>
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="hidePassword ? 'password' : 'text'"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hidePassword = !hidePassword"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hidePassword"
+            >
+              <mat-icon>{{
+                hidePassword ? "visibility_off" : "visibility"
+              }}</mat-icon>
+            </button>
+            <mat-icon matPrefix>lock</mat-icon>
+          </mat-form-field>
+
+          <div fxLayoutAlign="center center" fxFlexFill fxFlex="100">
+            @if (loginStatus === LoginStatus.ERROR) {
+              <mat-error class="text"
+                >Could not log you in with those details.</mat-error
+              >
+            }
+            @if (loginStatus === LoginStatus.AUTHENTICATING) {
+              <mat-spinner diameter="18" color="accent"></mat-spinner>
+            }
+          </div>
+
+          <div fxFlexFill>
+            <button
+              fxFlex="100"
+              mat-raised-button
+              color="accent"
+              type="submit"
+              [disabled]="loginStatus === LoginStatus.AUTHENTICATING"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+      </form>
+      <div fxLayout="column" fxLayoutGap="0" fxLayoutAlign="center center">
+        <p class="text">Don't have an account?</p>
+        <a mat-button routerLink="/auth/register" color="accent">register</a>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "angular-invoice-app"
+  },
+  "targets": {
+    "angular-invoice-app": {
+      "hosting": {
+        "invoice-app": [
+          "angular-invoice-app"
+        ]
+      }
+    }
+  }
+}

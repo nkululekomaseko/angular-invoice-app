@@ -1,0 +1,160 @@
+@if (invoiceState$ | async; as invoiceState) {
+  <section class="container">
+    <div fxFlex="10"></div>
+    <div class="mat-typography" fxFlex="80" fxLayout="column" fxLayoutGap="32">
+      <div><a mat-button (click)="goToPreviousPage()"><- go back</a></div>
+      <div class="content-container" fxLayoutAlign="space-between center">
+        <div fxLayout="row" fxLayoutGap="16" fxLayoutAlign="center center">
+          <p>Status:</p>
+          <app-invoice-status-chip [status]="invoiceState.status" />
+          @if (loadingData) {
+            <mat-spinner color="accent" diameter="24"></mat-spinner>
+          }
+        </div>
+        <div fxLayoutGap="16">
+          @if (invoiceState.status !== INVOICE_STATUS.PAID) {
+            <button
+              [disabled]="loadingData"
+              mat-raised-button
+              (click)="editInvoice(invoiceState)"
+            >
+              Edit
+            </button>
+          }
+          <button
+            [disabled]="loadingData"
+            mat-raised-button
+            color="warn"
+            (click)="deleteInvoice(invoiceState.reference)"
+          >
+            Delete
+          </button>
+          @if (invoiceState.status !== INVOICE_STATUS.PAID) {
+            <button
+              [disabled]="loadingData"
+              mat-raised-button
+              color="accent"
+              (click)="
+                updateInvoiceStatus(invoiceState, INVOICE_STATUS.PENDING)
+              "
+            >
+              Send
+            </button>
+          }
+          @if (invoiceState.status === INVOICE_STATUS.PENDING) {
+            <button
+              [disabled]="loadingData"
+              mat-raised-button
+              color="primary"
+              (click)="updateInvoiceStatus(invoiceState, INVOICE_STATUS.PAID)"
+            >
+              Mark as PAID
+            </button>
+          }
+        </div>
+      </div>
+      <div class="content-container">
+        <div fxLayout="row" fxLayoutAlign="space-between start">
+          <div fxLayout="column" fxLayoutGap="-16">
+            <p>
+              #<strong>{{
+                invoiceState.reference.slice(0, 8).toUpperCase()
+              }}</strong>
+            </p>
+            <p>{{ invoiceState.projectDescription }}</p>
+          </div>
+          <div fxLayout="column" fxLayoutGap="-16">
+            <p>{{ invoiceState.billFrom.address.street }},</p>
+            <p>{{ invoiceState.billFrom.address.city }},</p>
+            <p>{{ invoiceState.billFrom.address.postCode }},</p>
+            <p>{{ invoiceState.billFrom.address.country }}</p>
+          </div>
+        </div>
+        <div fxLayout="row">
+          <div fxLayout="column" fxFlex="30">
+            <div fxLayout="column" fxLayoutGap="-16">
+              <p>Invoice Date</p>
+              <p>
+                <strong>{{
+                  invoiceState.createdDate.toDate() | date: "longDate"
+                }}</strong>
+              </p>
+            </div>
+            <div fxLayout="column" fxLayoutGap="-16">
+              <p>Payment Due</p>
+              <p>
+                <strong>{{
+                  invoiceState.dueDate.toDate() | date: "longDate"
+                }}</strong>
+              </p>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayoutGap="-8" fxFlex="30">
+            <p>Bill To</p>
+            <p>
+              <strong>{{ invoiceState.billTo.clientName }}</strong>
+            </p>
+            <div fxLayout="column" fxLayoutGap="-16">
+              <p>{{ invoiceState.billTo.address.street }},</p>
+              <p>{{ invoiceState.billTo.address.city }},</p>
+              <p>{{ invoiceState.billTo.address.postCode }},</p>
+              <p>{{ invoiceState.billTo.address.country }}</p>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayoutGap="-8" fxFlex="40">
+            <p>Send To</p>
+            <p>
+              <strong>{{ invoiceState.billTo.clientEmail }}</strong>
+            </p>
+          </div>
+        </div>
+        <div class="items-container" fxLayout="column" fxLayoutGap="-16">
+          <div>
+            <p fxFlex="25">
+              <strong>Item Name</strong>
+            </p>
+            <p fxFlex="25">
+              <strong>Item Quantity</strong>
+            </p>
+            <p fxFlex="25">
+              <strong>Item Price</strong>
+            </p>
+            <p fxFlex="25">
+              <strong>Total Price</strong>
+            </p>
+          </div>
+          @for (item of invoiceState.itemList; track item.name) {
+            <div>
+              <p fxFlex="25">
+                {{ item.name }}
+              </p>
+              <p fxFlex="25">
+                {{ item.quantity }}
+              </p>
+              <p fxFlex="25">
+                {{ item.price | currency: "ZAR" : "R" : ".2" }}
+              </p>
+              <p fxFlex="25">
+                {{ item.price * item.quantity | currency: "ZAR" : "R" : ".2" }}
+              </p>
+            </div>
+          }
+        </div>
+        <div class="items-total-container" fxLayoutAlign="space-between center">
+          <h3>Amount Due</h3>
+          <h2>
+            {{
+              calculateTotal(invoiceState.itemList)
+                | currency: "ZAR" : "R" : ".2"
+            }}
+          </h2>
+        </div>
+      </div>
+    </div>
+    <div fxFlex="10"></div>
+  </section>
+} @else {
+  <div class="spinner-container" fxFlexFill fxLayoutAlign="center center">
+    <mat-spinner diameter="32" color="accent"></mat-spinner>
+  </div>
+}

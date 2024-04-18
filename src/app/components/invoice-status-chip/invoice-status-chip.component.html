@@ -1,0 +1,15 @@
+@if (status === INVOICE_STATUS.DRAFT) {
+  <div class="chip-container draft-status">
+    {{ status.toString()[0] + status.toString().slice(1).toLowerCase() }}
+  </div>
+}
+@if (status === INVOICE_STATUS.PENDING) {
+  <div class="chip-container pending-status">
+    {{ status.toString()[0] + status.toString().slice(1).toLowerCase() }}
+  </div>
+}
+@if (status === INVOICE_STATUS.PAID) {
+  <div class="chip-container paid-status">
+    {{ status.toString()[0] + status.toString().slice(1).toLowerCase() }}
+  </div>
+}

@@ -1,0 +1,21 @@
+@if (!!invoice) {
+  <div fxLayout="row" class="tile-container">
+    <div fxFlex="20" fxLayoutAlign="start center">
+      #<strong>{{ invoice.reference.slice(0, 8).toUpperCase() }}</strong>
+    </div>
+    <div fxFlex="25" fxLayoutAlign="start center">
+      Due: {{ invoice.dueDate.toDate() | date: "longDate" }}
+    </div>
+    <div fxFlex="25" fxLayoutAlign="center center">
+      {{ invoice.billTo.clientName }}
+    </div>
+    <div fxFlex="15" fxLayoutAlign="start center">
+      <strong
+        >{{ calculateTotal(invoice.itemList) | currency: "ZAR" : "R" : ".2" }}
+      </strong>
+    </div>
+    <div fxFlex="15" fxLayoutAlign="center center">
+      <app-invoice-status-chip [status]="invoice.status" />
+    </div>
+  </div>
+}

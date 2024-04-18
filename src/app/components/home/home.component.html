@@ -1,0 +1,36 @@
+<mat-toolbar color="primary">
+  <div fxLayout="row" fxLayoutAlign="space-between center" fxFlexFill>
+    <img class="logo" src="assets/white-logo.png" alt="Logo" />
+    <button mat-icon-button (click)="authService.logout()" matTooltip="Logout">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</mat-toolbar>
+<section>
+  <div fxFlex="10"></div>
+  <div class="mat-typography" fxFlex="80">
+    <div fxLayoutAlign="space-between center">
+      <div fxLayout="column" fxLayoutGap="-16">
+        <h2>Invoices</h2>
+        @if (invoiceService.invoiceState$ | async; as invoices) {
+          <p>
+            {{ evaluateInvoiceNumberLabel(invoices.length) }}
+          </p>
+        } @else {
+          <div class="spinner-container">
+            <mat-spinner diameter="32" color="accent"></mat-spinner>
+          </div>
+        }
+      </div>
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openInvoiceFormDialog()"
+      >
+        New Invoice
+      </button>
+    </div>
+    <app-invoices-list />
+  </div>
+  <div fxFlex="10"></div>
+</section>

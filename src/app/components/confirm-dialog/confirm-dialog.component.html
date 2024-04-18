@@ -1,0 +1,22 @@
+<div class="container">
+  <h2 class="title">{{ confirmDialogData.title }}</h2>
+  <mat-dialog-content>
+    <p class="message">{{ confirmDialogData.message }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions dir="rtl">
+    <button
+      mat-button
+      [mat-dialog-close]="CONFIRM_DIALOG_RESULT.CONFIRM"
+      color="warn"
+    >
+      Delete
+    </button>
+    <button
+      mat-button
+      [mat-dialog-close]="CONFIRM_DIALOG_RESULT.DENY"
+      color="accent"
+    >
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</div>

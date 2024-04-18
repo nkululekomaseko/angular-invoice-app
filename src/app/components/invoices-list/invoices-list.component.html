@@ -1,0 +1,12 @@
+<mat-action-list fxLayout="column" fxLayoutGap="16">
+  @if (invoiceService.invoiceState$ | async; as invoiceState) {
+    @for (invoice of invoiceState; track invoice.reference) {
+      <mat-list-item
+        class="tile-container"
+        routerLink="/invoice/{{ invoice.reference }}"
+      >
+        <app-invoice-tile [invoice]="invoice" class />
+      </mat-list-item>
+    }
+  }
+</mat-action-list>
